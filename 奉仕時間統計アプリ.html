@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>奉仕時間統計</title>
+
+<!-- iOSホーム画面用の設定 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="奉仕時間統計">
+<meta name="theme-color" content="#232B3D">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+
+<style>
+  :root{
+    --bg: #FAF7F1;
+    --surface: #FFFFFF;
+    --ink: #232B3D;
+    --ink-soft: #6B7284;
+    --border: #E5DDCF;
+    --gold: #C08A2E;
+    --gold-soft: #EFDFBD;
+    --field: #C08A2E;
+    --hlc: #2F6F72;
+    --other: #7C5A82;
+    --goal-line: #B6AC98;
+    --danger: #A6483A;
+    --radius-pill: 999px;
+    --radius-sm: 10px;
+    font-size: 16px;
+  }
+
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body{
+    margin:0; padding:0; height:100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #app{
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+
+  header.top{
+    padding: calc(18px + env(safe-area-inset-top)) 20px 14px;
+  }
+  header.top h1{
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+  header.top p{
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  main{ flex: 1; padding: 0 20px 28px; }
+
+  .view{ display:none; }
+  .view.active{ display:block; }
+
+  /* ---- 汎用パーツ ---- */
+  .section-title{
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 22px 0 10px;
+    font-weight: 500;
+  }
+  .section-title:first-child{ margin-top: 4px; }
+
+  .nav-row{
+    display:flex; align-items:center; justify-content: space-between;
+    padding: 6px 2px;
+  }
+  .nav-row .nav-btn{
+    width: 34px; height: 34px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 16px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .nav-row .nav-label{
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  /* ---- カレンダー ---- */
+  .weekday-row{
+    display:grid; grid-template-columns: repeat(7, 1fr);
+    margin-top: 6px;
+  }
+  .weekday-row span{
+    text-align:center; font-size: 11px; color: var(--ink-soft);
+    padding-bottom: 6px;
+  }
+  .cal-grid{
+    display:grid; grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .cal-cell{
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-sm);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-size: 14px;
+    position: relative;
+    border: 1px solid transparent;
+    color: var(--ink);
+  }
+  .cal-cell.other-month{ color: #C8C1B2; }
+  .cal-cell.today{ border-color: var(--ink-soft); }
+  .cal-cell.selected{ background: var(--ink); color: #fff; }
+  .cal-cell .dots{
+    display:flex; gap: 2px; margin-top: 3px; height: 5px;
+  }
+  .cal-cell .dots span{
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+  .cal-cell.selected .dots span{ opacity: 0.9; }
+
+  /* ---- 選択日パネル ---- */
+  .date-panel{
+    margin-top: 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .date-panel h2{
+    font-size: 16px;
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+  .entry-row{
+    display:flex; align-items:center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .entry-row .chip{
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink:0;
+  }
+  .entry-row .etype{ font-size: 14px; font-weight: 500; flex: 1; }
+  .entry-row .etime{ font-size: 14px; color: var(--ink-soft); }
+  .entry-row .edel{
+    width: 26px; height: 26px; border-radius: 50%;
+    border: none; background: transparent; color: var(--ink-soft);
+    font-size: 16px; line-height: 1;
+  }
+  .empty-note{
+    font-size: 13px; color: var(--ink-soft); padding: 10px 0;
+  }
+
+  .type-select{
+    display:flex; gap: 8px; margin-top: 14px;
+  }
+  .type-btn{
+    flex: 1;
+    padding: 10px 0;
+    text-align:center;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+  .type-btn.active{
+    color: #fff;
+    border-color: transparent;
+  }
+  .type-btn[data-type="field"].active{ background: var(--field); }
+  .type-btn[data-type="hlc"].active{ background: var(--hlc); }
+  .type-btn[data-type="other"].active{ background: var(--other); }
+
+  .time-row{
+    display:flex; align-items:center; justify-content: space-between;
+    margin-top: 16px;
+  }
+  .time-row label{ font-size: 14px; color: var(--ink-soft); }
+  select.time-select{
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  .primary-btn{
+    width: 100%;
+    margin-top: 18px;
+    padding: 13px 0;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: var(--ink);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .primary-btn:active{ opacity: 0.85; }
+
+  /* ---- 統計 ---- */
+  .stat-total{
+    padding: 18px 0 6px;
+  }
+  .stat-total .big{
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .stat-total .big span{ font-size: 18px; font-weight: 500; margin-left: 2px;}
+  .stat-total .goal-note{
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .stat-total .goal-note strong{ color: var(--ink); font-weight: 600; }
+
+  .progress-track{
+    margin-top: 12px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: #EFEAE0;
+    overflow: hidden;
+  }
+  .progress-fill{
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--gold);
+  }
+
+  .breakdown-row{ margin-top: 14px; }
+  .breakdown-row .label-line{
+    display:flex; align-items:center; justify-content: space-between;
+    font-size: 13px; margin-bottom: 6px;
+  }
+  .breakdown-row .label-line .name{
+    display:flex; align-items:center; gap: 7px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .breakdown-row .label-line .name .chip{
+    width: 9px; height: 9px; border-radius: 50%;
+  }
+  .breakdown-row .label-line .val{ color: var(--ink-soft); }
+  .bd-track{
+    height: 6px; border-radius: var(--radius-pill);
+    background: #EFEAE0; overflow:hidden;
+  }
+  .bd-fill{ height: 100%; border-radius: var(--radius-pill); }
+
+  .chart-wrap{
+    margin-top: 8px;
+    padding-top: 6px;
+  }
+  .chart-bars{
+    display:flex; align-items:flex-end; gap: 3px;
+    height: 120px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .chart-bars .goal-line{
+    position:absolute; left:0; right:0;
+    border-top: 1px dashed var(--goal-line);
+    font-size: 10px;
+  }
+  .chart-bars .goal-line span{
+    position:absolute; right:0; top:-14px; color: var(--ink-soft);
+    background: var(--bg); padding-left: 4px;
+  }
+  .bar-col{
+    flex: 1;
+    display:flex; flex-direction:column-reverse;
+    height: 100%;
+    border-radius: 3px 3px 0 0;
+    overflow:hidden;
+    min-width: 4px;
+  }
+  .bar-col .seg{ width: 100%; }
+  .chart-labels{
+    display:flex; gap: 3px; margin-top: 6px;
+  }
+  .chart-labels span{
+    flex:1; text-align:center; font-size: 9px; color: var(--ink-soft);
+  }
+
+  .empty-state{
+    text-align:center; padding: 40px 10px; color: var(--ink-soft); font-size: 13px;
+  }
+
+  /* ---- 下部タブ ---- */
+  nav.tabbar{
+    position: fixed; left:0; right:0; bottom:0;
+    display:flex;
+    background: rgba(250,247,241,0.92);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  nav.tabbar .tab{
+    flex:1; padding: 10px 0 8px;
+    display:flex; flex-direction:column; align-items:center; gap: 3px;
+    color: var(--ink-soft);
+    font-size: 11px;
+  }
+  nav.tabbar .tab.active{ color: var(--ink); font-weight: 600; }
+  nav.tabbar .tab .dot{
+    width: 6px; height:6px; border-radius:50%;
+    background: transparent;
+  }
+  nav.tabbar .tab.active .dot{ background: var(--gold); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header class="top">
+    <h1 id="headerTitle">記録</h1>
+    <p id="headerSub"></p>
+  </header>
+
+  <main>
+
+    <!-- 記録タブ -->
+    <section class="view active" id="view-record">
+      <div class="nav-row">
+        <button class="nav-btn" id="calPrev">‹</button>
+        <div class="nav-label" id="calLabel"></div>
+        <button class="nav-btn" id="calNext">›</button>
+      </div>
+      <div class="weekday-row">
+        <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+
+      <div class="date-panel">
+        <h2 id="selectedDateLabel"></h2>
+        <div id="entryList"></div>
+
+        <div class="type-select" id="typeSelect">
+          <button class="type-btn" data-type="field">野外</button>
+          <button class="type-btn" data-type="hlc">HLC</button>
+          <button class="type-btn" data-type="other">その他</button>
+        </div>
+        <div class="time-row">
+          <label for="timeSelect">時間</label>
+          <select class="time-select" id="timeSelect"></select>
+        </div>
+        <button class="primary-btn" id="saveBtn">記録する</button>
+      </div>
+    </section>
+
+    <!-- 月間統計タブ -->
+    <section class="view" id="view-month">
+      <div class="nav-row">
+        <button class="nav-btn" id="monthPrev">‹</button>
+        <div class="nav-label" id="monthLabel"></div>
+        <button class="nav-btn" id="monthNext">›</button>
+      </div>
+
+      <div class="stat-total">
+        <div class="big" id="monthTotalBig">0<span>時間</span></div>
+        <div class="goal-note" id="monthGoalNote"></div>
+        <div class="progress-track"><div class="progress-fill" id="monthProgressFill" style="width:0%"></div></div>
+      </div>
+
+      <div class="section-title">内訳</div>
+      <div id="monthBreakdown"></div>
+
+      <div class="section-title">日別の記録</div>
+      <div class="chart-wrap">
+        <div class="chart-bars" id="monthChartBars"></div>
+        <div class="chart-labels" id="monthChartLabels"></div>
+      </div>
+    </section>
+
+    <!-- 年間統計タブ -->
+    <section class="view" id="view-year">
+      <div class="nav-row">
+        <button class="nav-btn" id="yearPrev">‹</button>
+        <div class="nav-label" id="yearLabel"></div>
+        <button class="nav-btn" id="yearNext">›</button>
+      </div>
+
+      <div class="stat-total">
+        <div class="big" id="yearTotalBig">0<span>時間</span></div>
+        <div class="goal-note" id="yearGoalNote"></div>
+        <div class="progress-track"><div class="progress-fill" id="yearProgressFill" style="width:0%"></div></div>
+      </div>
+
+      <div class="section-title">内訳</div>
+      <div id="yearBreakdown"></div>
+
+      <div class="section-title">月別の記録（点線は月間目標50時間）</div>
+      <div class="chart-wrap">
+        <div class="chart-bars" id="yearChartBars"></div>
+        <div class="chart-labels" id="yearChartLabels"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab active" data-view="record"><span class="dot"></span>記録</button>
+    <button class="tab" data-view="month"><span class="dot"></span>月間統計</button>
+    <button class="tab" data-view="year"><span class="dot"></span>年間統計</button>
+  </nav>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===================== 定数 ===================== */
+  var TYPES = {
+    field: { label: "野外", color: "#C08A2E" },
+    hlc:   { label: "HLC", color: "#2F6F72" },
+    other: { label: "その他", color: "#7C5A82" }
+  };
+  var TYPE_ORDER = ["field", "hlc", "other"];
+  var MONTHLY_GOAL_MIN = 50 * 60;   // 3000分 = 50時間
+  var ANNUAL_GOAL_MIN  = 600 * 60;  // 36000分 = 600時間
+  var STORAGE_KEY = "houshiRecords_v1";
+  var WEEKDAYS = ["日","月","火","水","木","金","土"];
+  var SERVICE_YEAR_START_MONTH = 8; // 0始まりで8 = 9月。年度は9月〜翌年8月
+
+  // 与えられた日付が属する「奉仕年度」の開始年（9月の年）を返す
+  function serviceYearStart(date){
+    var y = date.getFullYear(), m = date.getMonth();
+    return m >= SERVICE_YEAR_START_MONTH ? y : y - 1;
+  }
+
+  /* ===================== データ ===================== */
+  function loadRecords(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+  function saveRecords(records){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  }
+  var records = loadRecords();
+
+  function pad(n){ return n < 10 ? "0"+n : ""+n; }
+  function dateKey(y,m,d){ return y+"-"+pad(m+1)+"-"+pad(d); }
+  function todayKey(){
+    var t = new Date();
+    return dateKey(t.getFullYear(), t.getMonth(), t.getDate());
+  }
+  function minutesToHM(min){
+    var h = Math.floor(min/60), m = min%60;
+    return { h:h, m:m };
+  }
+  function fmtHM(min){
+    var hm = minutesToHM(min);
+    return hm.m === 0 ? (hm.h+"時間") : (hm.h+"時間"+hm.m+"分");
+  }
+
+  function recordsForDate(key){
+    return records.filter(function(r){ return r.date === key; });
+  }
+  function upsertRecord(dateStr, type, minutes){
+    var existing = records.find(function(r){ return r.date === dateStr && r.type === type; });
+    if(existing){ existing.minutes = minutes; }
+    else{ records.push({ id: Date.now()+"_"+Math.random().toString(36).slice(2), date: dateStr, type: type, minutes: minutes }); }
+    saveRecords(records);
+  }
+  function deleteRecord(id){
+    records = records.filter(function(r){ return r.id !== id; });
+    saveRecords(records);
+  }
+
+  /* ===================== 状態 ===================== */
+  var state = {
+    activeTab: "record",
+    calYear: new Date().getFullYear(),
+    calMonth: new Date().getMonth(),
+    selectedDate: todayKey(),
+    selectedType: "field",
+    statMonthYear: new Date().getFullYear(),
+    statMonth: new Date().getMonth(),
+    statYear: serviceYearStart(new Date())
+  };
+
+  /* ===================== 時間選択肢の生成 (30分〜10時間, 30分刻み) ===================== */
+  var timeSelect = document.getElementById("timeSelect");
+  for(var min = 30; min <= 600; min += 30){
+    var opt = document.createElement("option");
+    opt.value = min;
+    var hm = minutesToHM(min);
+    opt.textContent = hm.m === 0 ? (hm.h+"時間") : (hm.h+"時間"+hm.m+"分");
+    timeSelect.appendChild(opt);
+  }
+  timeSelect.value = 60;
+
+  /* ===================== タブ切り替え ===================== */
+  var headerTitle = document.getElementById("headerTitle");
+  var headerSub = document.getElementById("headerSub");
+  var tabButtons = document.querySelectorAll("nav.tabbar .tab");
+  var views = {
+    record: document.getElementById("view-record"),
+    month: document.getElementById("view-month"),
+    year: document.getElementById("view-year")
+  };
+  var TAB_TITLES = { record: "記録", month: "月間統計", year: "年間統計" };
+
+  function setTab(tab){
+    state.activeTab = tab;
+    tabButtons.forEach(function(b){ b.classList.toggle("active", b.dataset.view === tab); });
+    Object.keys(views).forEach(function(k){ views[k].classList.toggle("active", k === tab); });
+    headerTitle.textContent = TAB_TITLES[tab];
+    if(tab === "record") headerSub.textContent = "奉仕した日と種類、時間を記録します";
+    if(tab === "month") headerSub.textContent = "月ごとの奉仕時間の合計と内訳です";
+    if(tab === "year") headerSub.textContent = "9月〜翌年8月の奉仕時間の合計と内訳です";
+    if(tab === "month") renderMonthStats();
+    if(tab === "year") renderYearStats();
+  }
+  tabButtons.forEach(function(b){
+    b.addEventListener("click", function(){ setTab(b.dataset.view); });
+  });
+
+  /* ===================== カレンダー描画 ===================== */
+  var calLabel = document.getElementById("calLabel");
+  var calGrid = document.getElementById("calGrid");
+
+  function renderCalendar(){
+    calLabel.textContent = state.calYear + "年" + (state.calMonth+1) + "月";
+    calGrid.innerHTML = "";
+
+    var firstDow = new Date(state.calYear, state.calMonth, 1).getDay();
+    var daysInMonth = new Date(state.calYear, state.calMonth+1, 0).getDate();
+    var daysInPrevMonth = new Date(state.calYear, state.calMonth, 0).getDate();
+    var today = todayKey();
+
+    var totalCells = Math.ceil((firstDow + daysInMonth) / 7) * 7;
+
+    for(var i=0; i<totalCells; i++){
+      var cell = document.createElement("div");
+      var dayNum, cellYear = state.calYear, cellMonth = state.calMonth, isOther = false;
+
+      if(i < firstDow){
+        dayNum = daysInPrevMonth - firstDow + 1 + i;
+        cellMonth = state.calMonth - 1; isOther = true;
+      } else if(i >= firstDow + daysInMonth){
+        dayNum = i - firstDow - daysInMonth + 1;
+        cellMonth = state.calMonth + 1; isOther = true;
+      } else {
+        dayNum = i - firstDow + 1;
+      }
+      var realDate = new Date(cellYear, cellMonth, dayNum);
+      var key = dateKey(realDate.getFullYear(), realDate.getMonth(), realDate.getDate());
+
+      cell.className = "cal-cell" + (isOther ? " other-month" : "");
+      if(key === today) cell.classList.add("today");
+      if(key === state.selectedDate) cell.classList.add("selected");
+
+      var numEl = document.createElement("div");
+      numEl.textContent = dayNum;
+      cell.appendChild(numEl);
+
+      var dayRecords = recordsForDate(key);
+      if(dayRecords.length){
+        var dots = document.createElement("div");
+        dots.className = "dots";
+        dayRecords.forEach(function(r){
+          var d = document.createElement("span");
+          d.style.background = TYPES[r.type].color;
+          dots.appendChild(d);
+        });
+        cell.appendChild(dots);
+      }
+
+      (function(k){
+        cell.addEventListener("click", function(){
+          state.selectedDate = k;
+          var d = new Date(k+"T00:00:00");
+          state.calYear = d.getFullYear();
+          state.calMonth = d.getMonth();
+          renderCalendar();
+          renderDatePanel();
+        });
+      })(key);
+
+      calGrid.appendChild(cell);
+    }
+  }
+
+  document.getElementById("calPrev").addEventListener("click", function(){
+    state.calMonth--;
+    if(state.calMonth < 0){ state.calMonth = 11; state.calYear--; }
+    renderCalendar();
+  });
+  document.getElementById("calNext").addEventListener("click", function(){
+    state.calMonth++;
+    if(state.calMonth > 11){ state.calMonth = 0; state.calYear++; }
+    renderCalendar();
+  });
+
+  /* ===================== 選択日パネル ===================== */
+  var selectedDateLabel = document.getElementById("selectedDateLabel");
+  var entryList = document.getElementById("entryList");
+  var typeSelect = document.getElementById("typeSelect");
+
+  function renderDatePanel(){
+    var d = new Date(state.selectedDate + "T00:00:00");
+    selectedDateLabel.textContent = (d.getMonth()+1) + "月" + d.getDate() + "日（" + WEEKDAYS[d.getDay()] + "）";
+
+    var dayRecords = recordsForDate(state.selectedDate);
+    entryList.innerHTML = "";
+    if(dayRecords.length === 0){
+      var empty = document.createElement("div");
+      empty.className = "empty-note";
+      empty.textContent = "この日の記録はまだありません";
+      entryList.appendChild(empty);
+    } else {
+      TYPE_ORDER.forEach(function(t){
+        var rec = dayRecords.find(function(r){ return r.type === t; });
+        if(!rec) return;
+        var row = document.createElement("div");
+        row.className = "entry-row";
+        row.innerHTML =
+          '<span class="chip" style="background:'+TYPES[t].color+'"></span>' +
+          '<span class="etype">'+TYPES[t].label+'</span>' +
+          '<span class="etime">'+fmtHM(rec.minutes)+'</span>';
+        var delBtn = document.createElement("button");
+        delBtn.className = "edel";
+        delBtn.textContent = "×";
+        delBtn.addEventListener("click", function(){
+          deleteRecord(rec.id);
+          renderCalendar();
+          renderDatePanel();
+        });
+        row.appendChild(delBtn);
+        entryList.appendChild(row);
+      });
+    }
+  }
+
+  typeSelect.querySelectorAll(".type-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      state.selectedType = btn.dataset.type;
+      typeSelect.querySelectorAll(".type-btn").forEach(function(b){
+        b.classList.toggle("active", b === btn);
+      });
+    });
+  });
+  // 初期選択
+  typeSelect.querySelector('[data-type="field"]').classList.add("active");
+
+  document.getElementById("saveBtn").addEventListener("click", function(){
+    var minutes = parseInt(timeSelect.value, 10);
+    upsertRecord(state.selectedDate, state.selectedType, minutes);
+    renderCalendar();
+    renderDatePanel();
+  });
+
+  /* ===================== 月間統計 ===================== */
+  var monthLabel = document.getElementById("monthLabel");
+
+  function renderMonthStats(){
+    monthLabel.textContent = state.statMonthYear + "年" + (state.statMonth+1) + "月";
+
+    var daysInMonth = new Date(state.statMonthYear, state.statMonth+1, 0).getDate();
+    var totals = { field:0, hlc:0, other:0 };
+    var dayTotals = [];
+    for(var d=1; d<=daysInMonth; d++){
+      var key = dateKey(state.statMonthYear, state.statMonth, d);
+      var dayRecs = recordsForDate(key);
+      var dSum = { field:0, hlc:0, other:0 };
+      dayRecs.forEach(function(r){ dSum[r.type] += r.minutes; totals[r.type] += r.minutes; });
+      dayTotals.push(dSum);
+    }
+    var grandTotal = totals.field + totals.hlc + totals.other;
+
+    renderTotalBlock("month", grandTotal, MONTHLY_GOAL_MIN);
+    renderBreakdown(document.getElementById("monthBreakdown"), totals, MONTHLY_GOAL_MIN);
+    renderDailyChart(dayTotals, daysInMonth);
+  }
+
+  function renderDailyChart(dayTotals, daysInMonth){
+    var barsWrap = document.getElementById("monthChartBars");
+    var labelsWrap = document.getElementById("monthChartLabels");
+    barsWrap.innerHTML = "";
+    labelsWrap.innerHTML = "";
+
+    var maxMinutes = 0;
+    dayTotals.forEach(function(dt){
+      var sum = dt.field + dt.hlc + dt.other;
+      if(sum > maxMinutes) maxMinutes = sum;
+    });
+    if(maxMinutes === 0) maxMinutes = 60;
+
+    dayTotals.forEach(function(dt, idx){
+      var col = document.createElement("div");
+      col.className = "bar-col";
+      var sum = dt.field + dt.hlc + dt.other;
+      var heightPct = Math.max(sum / maxMinutes * 100, 0);
+      col.style.height = heightPct + "%";
+      TYPE_ORDER.forEach(function(t){
+        if(dt[t] > 0){
+          var seg = document.createElement("div");
+          seg.className = "seg";
+          seg.style.background = TYPES[t].color;
+          seg.style.height = (dt[t] / sum * 100) + "%";
+          col.appendChild(seg);
+        }
+      });
+      barsWrap.appendChild(col);
+
+      if(daysInMonth <= 31 && (idx+1) % 5 === 0 || idx === 0){
+        var lab = document.createElement("span");
+        lab.textContent = idx+1;
+        labelsWrap.appendChild(lab);
+      } else {
+        labelsWrap.appendChild(document.createElement("span"));
+      }
+    });
+  }
+
+  document.getElementById("monthPrev").addEventListener("click", function(){
+    state.statMonth--;
+    if(state.statMonth < 0){ state.statMonth = 11; state.statMonthYear--; }
+    renderMonthStats();
+  });
+  document.getElementById("monthNext").addEventListener("click", function(){
+    state.statMonth++;
+    if(state.statMonth > 11){ state.statMonth = 0; state.statMonthYear++; }
+    renderMonthStats();
+  });
+
+  /* ===================== 年間統計 ===================== */
+  var yearLabel = document.getElementById("yearLabel");
+
+  function renderYearStats(){
+    yearLabel.textContent = state.statYear + "年9月〜" + (state.statYear+1) + "年8月";
+
+    var totals = { field:0, hlc:0, other:0 };
+    var monthTotals = [];
+    for(var i=0; i<12; i++){
+      var m = (SERVICE_YEAR_START_MONTH + i) % 12;
+      var y = (m < SERVICE_YEAR_START_MONTH) ? state.statYear + 1 : state.statYear;
+      var daysInM = new Date(y, m+1, 0).getDate();
+      var mSum = { field:0, hlc:0, other:0, _month:m };
+      for(var d=1; d<=daysInM; d++){
+        var key = dateKey(y, m, d);
+        recordsForDate(key).forEach(function(r){ mSum[r.type] += r.minutes; totals[r.type] += r.minutes; });
+      }
+      monthTotals.push(mSum);
+    }
+    var grandTotal = totals.field + totals.hlc + totals.other;
+
+    renderTotalBlock("year", grandTotal, ANNUAL_GOAL_MIN);
+    renderBreakdown(document.getElementById("yearBreakdown"), totals, ANNUAL_GOAL_MIN);
+    renderMonthlyChart(monthTotals);
+  }
+
+  function renderMonthlyChart(monthTotals){
+    var barsWrap = document.getElementById("yearChartBars");
+    var labelsWrap = document.getElementById("yearChartLabels");
+    barsWrap.innerHTML = "";
+    labelsWrap.innerHTML = "";
+
+    var maxMinutes = MONTHLY_GOAL_MIN;
+    monthTotals.forEach(function(mt){
+      var sum = mt.field + mt.hlc + mt.other;
+      if(sum > maxMinutes) maxMinutes = sum;
+    });
+
+    var goalLine = document.createElement("div");
+    goalLine.className = "goal-line";
+    goalLine.style.bottom = (MONTHLY_GOAL_MIN / maxMinutes * 100) + "%";
+    goalLine.innerHTML = '<span>50h</span>';
+    barsWrap.appendChild(goalLine);
+
+    monthTotals.forEach(function(mt, idx){
+      var col = document.createElement("div");
+      col.className = "bar-col";
+      var sum = mt.field + mt.hlc + mt.other;
+      var heightPct = Math.max(sum / maxMinutes * 100, 0);
+      col.style.height = heightPct + "%";
+      TYPE_ORDER.forEach(function(t){
+        if(mt[t] > 0){
+          var seg = document.createElement("div");
+          seg.className = "seg";
+          seg.style.background = TYPES[t].color;
+          seg.style.height = (mt[t] / sum * 100) + "%";
+          col.appendChild(seg);
+        }
+      });
+      barsWrap.appendChild(col);
+
+      var lab = document.createElement("span");
+      lab.textContent = (mt._month+1) + "月";
+      labelsWrap.appendChild(lab);
+    });
+  }
+
+  document.getElementById("yearPrev").addEventListener("click", function(){
+    state.statYear--;
+    renderYearStats();
+  });
+  document.getElementById("yearNext").addEventListener("click", function(){
+    state.statYear++;
+    renderYearStats();
+  });
+
+  /* ===================== 共通: 合計ブロック・内訳 ===================== */
+  function renderTotalBlock(prefix, totalMinutes, goalMinutes){
+    var hm = minutesToHM(totalMinutes);
+    var bigEl = document.getElementById(prefix+"TotalBig");
+    bigEl.innerHTML = hm.h + "<span>時間" + (hm.m>0 ? (hm.m+"分") : "") + "</span>";
+
+    var pct = Math.min(totalMinutes / goalMinutes * 100, 100);
+    document.getElementById(prefix+"ProgressFill").style.width = pct + "%";
+
+    var noteEl = document.getElementById(prefix+"GoalNote");
+    var goalH = goalMinutes/60;
+    if(totalMinutes >= goalMinutes){
+      noteEl.innerHTML = "目標の" + goalH + "時間を<strong>達成しました</strong>";
+    } else {
+      var remain = goalMinutes - totalMinutes;
+      noteEl.innerHTML = "目標" + goalH + "時間まであと <strong>" + fmtHM(remain) + "</strong>";
+    }
+  }
+
+  function renderBreakdown(container, totals, goalMinutes){
+    container.innerHTML = "";
+    var grand = totals.field + totals.hlc + totals.other;
+    TYPE_ORDER.forEach(function(t){
+      var row = document.createElement("div");
+      row.className = "breakdown-row";
+      var pctOfGoal = Math.min(totals[t] / goalMinutes * 100, 100);
+      row.innerHTML =
+        '<div class="label-line">' +
+          '<span class="name"><span class="chip" style="background:'+TYPES[t].color+'"></span>'+TYPES[t].label+'</span>' +
+          '<span class="val">'+fmtHM(totals[t])+'</span>' +
+        '</div>' +
+        '<div class="bd-track"><div class="bd-fill" style="width:'+pctOfGoal+'%;background:'+TYPES[t].color+'"></div></div>';
+      container.appendChild(row);
+    });
+  }
+
+  /* ===================== 初期描画 ===================== */
+  renderCalendar();
+  renderDatePanel();
+  setTab("record");
+
+})();
+</script>
+</body>
+</html>
